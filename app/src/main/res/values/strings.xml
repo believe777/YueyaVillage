@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">YueyaVillage</string>
+    <string name="app_name">月芽村</string>
+    <!-- login -->
+    <string name="hint_input_account">请输入账号</string>
+    <string name="hint_input_pwd">请输入密码</string>
+    <string name="login_forget_pwd">叫我大哥，我教你改密码</string>
+    <!-- regist -->
+    <string name="hint_input_confirm_pwd">请确认密码</string>
 </resources>

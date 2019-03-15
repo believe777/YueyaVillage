@@ -1,7 +1,10 @@
-package ycy.ccyy.yueyavillage;
+package ycy.ccyy.yueyavillage.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import ycy.ccyy.yueyavillage.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
