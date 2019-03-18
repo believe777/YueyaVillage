@@ -11,7 +11,11 @@ import ycy.ccyy.yueyavillage.YcyApplication;
 //权限工具类
 public class PermissionsUtil {
     //应用启动必须权限
-    private static final String[] NecessaryPermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String[] NecessaryPermissions = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
+    };
     public static final int NecessaryPermissionsCode = 1000;
 
     public static boolean hadNecessaryPermissions() {

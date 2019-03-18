@@ -39,4 +39,9 @@ dependencies {
     implementation 'com.uber.autodispose:autodispose:0.7.0'
     implementation 'com.uber.autodispose:autodispose-android:0.7.0'
     implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
+    implementation 'com.android.support:design:26.0.0'
+    //微信sdk
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

@@ -30,6 +30,46 @@ public class SharedPreferenceUtil {
         editor.apply();
     }
 
+    public static synchronized void saveBoolean(String key, boolean value) {
+        init();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static synchronized void saveFloat(String key, float value) {
+        init();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat(key, value);
+        editor.apply();
+    }
+
+    //----------------------------------------------------------------------------
+    public static synchronized String getString(String key, String defaultValue) {
+        init();
+        return sharedPreferences.getString(key, defaultValue);
+    }
+
+    public static synchronized Integer getInt(String key, int defaultValue) {
+        init();
+        return sharedPreferences.getInt(key, defaultValue);
+    }
+
+    public static synchronized boolean getBoolean(String key, boolean defaultValue) {
+        init();
+        return sharedPreferences.getBoolean(key, defaultValue);
+    }
+
+    public static synchronized float getFloat(String key, float defaultValue) {
+        init();
+        return sharedPreferences.getFloat(key, defaultValue);
+    }
+
+    public static synchronized long getLong(String key, long defaultValue) {
+        init();
+        return sharedPreferences.getLong(key, defaultValue);
+    }
+
 
     SharedPreferenceUtil() {
         sharedPreferences = YcyApplication.getApp().getSharedPreferences(MD5Util.md5(YcyApplication.getApp().getPackageName()), YcyApplication.getApp().getApplicationContext().MODE_PRIVATE);

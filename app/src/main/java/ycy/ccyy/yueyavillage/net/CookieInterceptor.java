@@ -6,6 +6,7 @@ import okhttp3.Interceptor;
 import okhttp3.Response;
 
 //cookie拦截
+// TODO: 2019/3/18 预留，看后期是否自己做登录注册
 public class CookieInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {

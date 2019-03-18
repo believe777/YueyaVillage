@@ -6,4 +6,6 @@
     <color name="ccyy">#cba7f9</color>
     <color name="base_bg">#f7f7f7</color>
     <color name="cccccc">#cccccc</color>
+    <color name="tab_selected">#741DE4</color>
+    <color name="tab_unselected">#8E8E93</color>
 </resources>

@@ -7,15 +7,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.HashMap;
 
 import ycy.ccyy.yueyavillage.R;
 import ycy.ccyy.yueyavillage.base.MvpActivity;
-import ycy.ccyy.yueyavillage.bean.LoginBean;
+import ycy.ccyy.yueyavillage.bean.UserInfoBean;
+import ycy.ccyy.yueyavillage.bean.WXAccessTokenBean;
+import ycy.ccyy.yueyavillage.bean.WXRefreshToken;
 import ycy.ccyy.yueyavillage.contract.LoginContract;
+import ycy.ccyy.yueyavillage.event.WXCodeEvent;
 import ycy.ccyy.yueyavillage.presenter.LoginPresenter;
 import ycy.ccyy.yueyavillage.util.LogUtil;
 import ycy.ccyy.yueyavillage.widget.BaseTitle;
+import ycy.ccyy.yueyavillage.wxapi.WXEntryActivity;
 
 //登录测试
 public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginContract.View, View.OnClickListener {
@@ -99,8 +106,23 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginC
     }
 
     @Override
-    public void onLoginSuccess(LoginBean loginBean) {
-        LogUtil.d("onLoginSuccess");
+    public void onWXLoginSuccess(UserInfoBean userInfoBean) {
+
+    }
+
+    @Override
+    public void onGetWXTokenSuccess(WXAccessTokenBean wxAccessTokenBean) {
+
+    }
+
+    @Override
+    public void onRefreshWXTokenSuccess(WXRefreshToken wxRefreshToken) {
+
+    }
+
+    @Override
+    public void onCheckWXTokenSuccess() {
+
     }
 
     @Override
@@ -112,20 +134,24 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                HashMap map = new HashMap();
-                map.put("username", etLoginAccount.getText().toString());
-                map.put("password", etLoginPwd.getText().toString());
-                presenter.login(map);
                 break;
             case R.id.iv_login_account_clear:
                 etLoginAccount.setText("");
                 break;
             case R.id.tv_login_forget_pwd:
-
                 break;
             case R.id.btn_to_regist:
-
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(WXCodeEvent wxCodeEvent) {
+        HashMap tokenMap = new HashMap<>();
+        tokenMap.put("appid", WXEntryActivity.WX_APP_ID);
+        tokenMap.put("secret", WXEntryActivity.WX_APP_SECRET);
+        tokenMap.put("code", wxCodeEvent.code);
+        tokenMap.put("grant_type", "authorization_code");
+        presenter.wxGetToken(tokenMap);
     }
 }

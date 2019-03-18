@@ -52,7 +52,7 @@ public class LoadingActivity extends BaseActivity {
     }
 
     void jumpToHomePage() {
-        Intent it = new Intent(this, MainActivity.class);
+        Intent it = new Intent(this, HomeActivity.class);
         startActivity(it);
     }
 
