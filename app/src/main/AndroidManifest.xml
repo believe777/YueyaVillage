@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,16 +28,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="true"
-            android:taskAffinity="net.sourceforge.simcpux"
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent101557229" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
+        <activity
+            android:name=".view.LoadingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

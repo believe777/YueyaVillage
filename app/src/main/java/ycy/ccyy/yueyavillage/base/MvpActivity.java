@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
@@ -27,7 +28,7 @@ public abstract class MvpActivity<T extends BasePresenter> extends BaseActivity 
 
     @Override
     public void showToast(String text) {
-
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();;
     }
 
     @Override

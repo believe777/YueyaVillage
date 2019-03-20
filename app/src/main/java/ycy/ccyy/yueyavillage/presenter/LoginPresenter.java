@@ -1,71 +1,123 @@
 package ycy.ccyy.yueyavillage.presenter;
 
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import android.os.Message;
+import android.text.TextUtils;
 
-import java.util.HashMap;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+import org.json.JSONObject;
 
 import ycy.ccyy.yueyavillage.YcyApplication;
 import ycy.ccyy.yueyavillage.base.BasePresenter;
 import ycy.ccyy.yueyavillage.contract.LoginContract;
 import ycy.ccyy.yueyavillage.module.LoginModule;
-import ycy.ccyy.yueyavillage.util.MD5Util;
 import ycy.ccyy.yueyavillage.view.LoginActivity;
-import ycy.ccyy.yueyavillage.wxapi.WXEntryActivity;
 
 /**
  * QQ开放平台
  * appID:   101557229
  * appkey:  c5feff957addbf3ce0c907a052924fad
- * <p>
- * 微信开放平台
- * AppID：wxd39c1cb96f11b216
- * AppSecret:  021cf942b8a79db6b9a8ee0d82a94294
  */
 //登录测试
 public class LoginPresenter extends BasePresenter<LoginActivity> implements LoginContract.Presenter {
     private LoginContract.Module module;
-    private IWXAPI api;
+    public static final String QQ_APP_ID = "101557229";
+    public static final String QQ_APP_KEY = "c5feff957addbf3ce0c907a052924fad";
+    private Tencent mTencent;
+
+    private IUiListener iUiListener = new BaseUiListener() {
+        @Override
+        protected void doComplete(JSONObject values) {
+            initOpenidAndToken(values);
+            IUiListener listener = new IUiListener() {
+
+                @Override
+                public void onError(UiError e) {
+
+                }
+
+                @Override
+                public void onComplete(final Object response) {
+                    Message msg = new Message();
+                    msg.obj = response;
+                    msg.what = 0;
+                    mView.mHandler.sendMessage(msg);
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            };
+            UserInfo userInfo = new UserInfo(mView, mTencent.getQQToken());
+            userInfo.getUserInfo(listener);
+        }
+    };
+
+    private void initOpenidAndToken(JSONObject values) {
+        try {
+            String token = values.getString(Constants.PARAM_ACCESS_TOKEN);
+            String expires = values.getString(Constants.PARAM_EXPIRES_IN);
+            String openId = values.getString(Constants.PARAM_OPEN_ID);
+            if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
+                    && !TextUtils.isEmpty(openId)) {
+                mTencent.setAccessToken(token, expires);
+                mTencent.setOpenId(openId);
+            }
+        } catch (Exception e) {
+        }
+    }
 
     public LoginPresenter() {
         module = new LoginModule();
     }
 
+
     @Override
-    public void wxLogin(HashMap map) {
-        //----------注册---------------
-        api = WXAPIFactory.createWXAPI(YcyApplication.getApp(), WXEntryActivity.WX_APP_ID, true);
-        api.registerApp(WXEntryActivity.WX_APP_ID);
-        //-----------拉起授权登录页----------------
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = MD5Util.md5(WXEntryActivity.STATE);
-        api.sendReq(req);
+    public void qqLogin() {
+        mTencent = Tencent.createInstance(QQ_APP_ID, YcyApplication.getApp());
+        if (!mTencent.isSessionValid()) {
+            mTencent.login(mView, "all", iUiListener);
+        }
     }
 
     @Override
-    public void wxGetToken(HashMap map) {
-
+    public IUiListener getQQLoginListener() {
+        return iUiListener;
     }
 
-    @Override
-    public void wxCheckToken(HashMap map) {
+    private class BaseUiListener implements IUiListener {
 
-    }
+        @Override
+        public void onComplete(Object response) {
+            if (null == response) {
+                mView.onLoginFailed("登录失败");
+                return;
+            }
+            JSONObject jsonResponse = (JSONObject) response;
+            if (null != jsonResponse && jsonResponse.length() == 0) {
+                mView.onLoginFailed("登录失败");
+                return;
+            }
+            doComplete((JSONObject) response);
+        }
 
-    @Override
-    public void wxGetUserInfo(HashMap map) {
+        protected void doComplete(JSONObject values) {
 
-    }
+        }
 
-    @Override
-    public void wxRefreshToken(HashMap map) {
+        @Override
+        public void onError(UiError e) {
+            mView.onLoginFailed("登录错误");
+        }
 
-    }
-
-    @Override
-    public void qqLogin(HashMap map) {
-
+        @Override
+        public void onCancel() {
+            mView.onLoginFailed("登录取消");
+        }
     }
 }

@@ -1,35 +1,53 @@
 package ycy.ccyy.yueyavillage.view;
 
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.Tencent;
 
-import java.util.HashMap;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ycy.ccyy.yueyavillage.R;
 import ycy.ccyy.yueyavillage.base.MvpActivity;
-import ycy.ccyy.yueyavillage.bean.UserInfoBean;
-import ycy.ccyy.yueyavillage.bean.WXAccessTokenBean;
-import ycy.ccyy.yueyavillage.bean.WXRefreshToken;
 import ycy.ccyy.yueyavillage.contract.LoginContract;
-import ycy.ccyy.yueyavillage.event.WXCodeEvent;
 import ycy.ccyy.yueyavillage.presenter.LoginPresenter;
-import ycy.ccyy.yueyavillage.util.LogUtil;
-import ycy.ccyy.yueyavillage.widget.BaseTitle;
-import ycy.ccyy.yueyavillage.wxapi.WXEntryActivity;
 
+/**
+ * 微信登录流程
+ * ①初次登录：  用户授权获取code --> 通过code获取access_token，并缓存 --> 通过access_token获取用户信息
+ * ②非初次登录：检查缓存access_token是否有效 --> 无效则通过refresh_token刷新access_token --> 通过access_token获取用户信息
+ */
 //登录测试
 public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginContract.View, View.OnClickListener {
-    private EditText etLoginAccount;
-    private EditText etLoginPwd;
-    private ImageView ivLoginAccountClear;
-    private Button btnLogin;
+    public Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                JSONObject response = (JSONObject) msg.obj;
+                if (response.has("nickname")) {
+                    try {
+                        ((TextView) findViewById(R.id.test)).setText("" + response);
+                        showToast("登录成功");
+                        String userName = response.getString("nickname");//姓名
+                        String sex = response.getString("gender");//性别
+                        String userIcon = response.getString("figureurl_qq_2");//头像
+                        String province = response.getString("province");//省份
+                        String city = response.getString("city");//城市
+                        String year = response.getString("year");//出生年
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    };
 
     @Override
     protected int getResourceId() {
@@ -44,114 +62,46 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginC
 
     @Override
     protected void initControll() {
-        new BaseTitle(this, "登录");
-        etLoginAccount = findViewById(R.id.et_login_account);
-        etLoginPwd = findViewById(R.id.et_login_pwd);
-        btnLogin = findViewById(R.id.btn_login);
-        ivLoginAccountClear = findViewById(R.id.iv_login_account_clear);
+
     }
 
     @Override
     protected void initObserable() {
-        btnLogin.setOnClickListener(this);
-        findViewById(R.id.iv_login_account_clear).setOnClickListener(this);
-        findViewById(R.id.tv_login_forget_pwd);
-        findViewById(R.id.btn_to_regist);
-        etLoginAccount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        findViewById(R.id.btn_login_wx).setOnClickListener(this);
+        findViewById(R.id.btn_login_qq).setOnClickListener(this);
+    }
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (etLoginAccount.getText().length() > 0) {
-                    ivLoginAccountClear.setVisibility(View.VISIBLE);
-                    if (etLoginPwd.getText().length() > 0) {
-                        btnLogin.setEnabled(true);
-                    } else {
-                        btnLogin.setEnabled(false);
-                    }
-                } else {
-                    ivLoginAccountClear.setVisibility(View.GONE);
-                    btnLogin.setEnabled(false);
-                }
-            }
-        });
-        etLoginPwd.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (etLoginPwd.getText().length() > 0 && etLoginAccount.getText().length() > 0) {
-                    btnLogin.setEnabled(true);
-                } else {
-                    btnLogin.setEnabled(false);
-                }
-            }
-        });
+    //登录失败
+    @Override
+    public void onLoginFailed(String errorMsg) {
+        showToast(errorMsg);
     }
 
     @Override
-    public void onWXLoginSuccess(UserInfoBean userInfoBean) {
-
+    public void pleaseInstallQQ() {
+        showToast("请先安装QQ");
     }
 
     @Override
-    public void onGetWXTokenSuccess(WXAccessTokenBean wxAccessTokenBean) {
+    public void qqLogin() {
 
-    }
-
-    @Override
-    public void onRefreshWXTokenSuccess(WXRefreshToken wxRefreshToken) {
-
-    }
-
-    @Override
-    public void onCheckWXTokenSuccess() {
-
-    }
-
-    @Override
-    public void onLoginFailed(Throwable throwable) {
-        LogUtil.e("onLoginFailed");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_login:
-                break;
-            case R.id.iv_login_account_clear:
-                etLoginAccount.setText("");
-                break;
-            case R.id.tv_login_forget_pwd:
-                break;
-            case R.id.btn_to_regist:
+            case R.id.btn_login_qq:
+                presenter.qqLogin();
                 break;
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(WXCodeEvent wxCodeEvent) {
-        HashMap tokenMap = new HashMap<>();
-        tokenMap.put("appid", WXEntryActivity.WX_APP_ID);
-        tokenMap.put("secret", WXEntryActivity.WX_APP_SECRET);
-        tokenMap.put("code", wxCodeEvent.code);
-        tokenMap.put("grant_type", "authorization_code");
-        presenter.wxGetToken(tokenMap);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_LOGIN || requestCode == Constants.REQUEST_APPBAR) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, presenter.getQQLoginListener());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

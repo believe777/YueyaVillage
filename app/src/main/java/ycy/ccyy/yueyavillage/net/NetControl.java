@@ -41,7 +41,6 @@ public class NetControl {
     private static final String BASE_URL = "https://www.wanandroid.com/";
     public static final String WX_URL = "https://api.weixin.qq.com/";
     private Retrofit retrofit;
-    private Retrofit wxRetrofit;
 
     public static NetControl getInstance() {
         if (control == null) {
@@ -56,16 +55,12 @@ public class NetControl {
 
     NetControl() {
         retrofit = initRotrofit(BASE_URL);
-        wxRetrofit = initRotrofit(WX_URL);
     }
 
     public ApiService getApi() {
         return retrofit.create(ApiService.class);
     }
 
-    public WXService getWX() {
-        return wxRetrofit.create(WXService.class);
-    }
 
     private Retrofit initRotrofit(String url) {
         return new Retrofit.Builder()
