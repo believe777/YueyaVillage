@@ -13,16 +13,19 @@ import ycy.ccyy.yueyavillage.R;
 import ycy.ccyy.yueyavillage.adapter.HomePagerAdapter;
 import ycy.ccyy.yueyavillage.base.MvpActivity;
 import ycy.ccyy.yueyavillage.base.MvpFragment;
+import ycy.ccyy.yueyavillage.bean.UserInfoBean;
 import ycy.ccyy.yueyavillage.contract.HomeContract;
 import ycy.ccyy.yueyavillage.fragment.AmusementParkFragment;
 import ycy.ccyy.yueyavillage.fragment.PromisePoolFragment;
 import ycy.ccyy.yueyavillage.fragment.SmallYellowPacketFragment;
 import ycy.ccyy.yueyavillage.fragment.YueyaVillageFragment;
+import ycy.ccyy.yueyavillage.presenter.HomePresenter;
+import ycy.ccyy.yueyavillage.util.DataCacheUtil;
 import ycy.ccyy.yueyavillage.widget.HomeViewPager;
 
 
 public class HomeActivity extends MvpActivity implements HomeContract.View {
-
+    private HomePresenter mHomePresenter;
     private HomeViewPager homeViewPager;
     private TabLayout homeTabLayout;
 
@@ -33,7 +36,13 @@ public class HomeActivity extends MvpActivity implements HomeContract.View {
 
     @Override
     protected void bindPresenter() {
+        mHomePresenter = new HomePresenter();
+    }
 
+    @Override
+    protected void initIntent() {
+        UserInfoBean userInfoBean = DataCacheUtil.getInstance().getUserInfo();
+        showToast("UserName is " + userInfoBean.userName);
     }
 
     @Override

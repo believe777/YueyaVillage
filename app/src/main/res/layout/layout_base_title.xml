@@ -2,30 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_height"
-    android:background="@color/ccyy"
-    android:paddingLeft="@dimen/title_padding"
-    android:paddingRight="@dimen/title_padding">
+    android:background="@color/ccyy">
 
-    <ViewStub
-        android:id="@+id/title_left_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout="@layout/layout_default_title_left" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/title_padding"
+        android:paddingRight="@dimen/title_padding">
 
-    <ViewStub
-        android:id="@+id/title_middle_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout="@layout/layout_default_title_middle" />
+        <ViewStub
+            android:id="@+id/title_left_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout="@layout/layout_default_title_left" />
 
-    <ViewStub
-        android:id="@+id/title_right_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout="@layout/layout_default_title_right"/>
+        <ViewStub
+            android:id="@+id/title_middle_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout="@layout/layout_default_title_middle" />
+
+        <ViewStub
+            android:id="@+id/title_right_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout="@layout/layout_default_title_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:alpha="0.25"
+        android:background="#000000"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

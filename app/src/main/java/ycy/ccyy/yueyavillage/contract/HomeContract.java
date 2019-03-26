@@ -8,7 +8,6 @@ public interface HomeContract {
     }
 
     interface Presenter{
-
     }
 
     interface Module{

@@ -5,6 +5,7 @@ import com.tencent.tauth.IUiListener;
 import java.util.HashMap;
 
 import ycy.ccyy.yueyavillage.base.BaseView;
+import ycy.ccyy.yueyavillage.bean.UserInfoBean;
 
 //登录测试
 public interface LoginContract {

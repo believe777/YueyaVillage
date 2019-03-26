@@ -7,8 +7,9 @@ import java.io.File;
 //文件缓存类
 // TODO: 2019/3/15 需要增加应用删除时，将相关缓存文件同步删除；
 public class StorageUtils {
-    private static final String ROOT_DIR = "YueyaVillage";
-    private static final String CACHE = "cache";
+    public static final String ROOT_DIR = "YueyaVillage";
+    public static final String CACHE = "cache";
+    public static final String IMAGE = "image";
 
     //根目录
     private static File getRootDir() {

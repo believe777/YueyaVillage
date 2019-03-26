@@ -38,8 +38,7 @@ import ycy.ccyy.yueyavillage.util.StorageUtils;
 public class NetControl {
     private static final long MAX_SIZE = 1024 * 300;
     private static NetControl control = null;
-    private static final String BASE_URL = "https://www.wanandroid.com/";
-    public static final String WX_URL = "https://api.weixin.qq.com/";
+    private static final String BASE_URL = "http://ycy_wanlai407.dahuizong.com:10001/";
     private Retrofit retrofit;
 
     public static NetControl getInstance() {
@@ -160,6 +159,7 @@ public class NetControl {
         okHttpClientBuilder.connectTimeout(20, TimeUnit.SECONDS).writeTimeout(120, TimeUnit.SECONDS).readTimeout(120, TimeUnit.SECONDS);
         okHttpClientBuilder.addInterceptor(new HttpLoggingInterceptor());
         okHttpClientBuilder.addInterceptor(new CookieInterceptor());
+        okHttpClientBuilder.addInterceptor(new HeaderInterceptor());
         okHttpClientBuilder.cache(new Cache(StorageUtils.getCacheDir(StorageUtils.FILE_TYPE.CACHE), MAX_SIZE));
         if (BuildConfig.DEBUG) {
             okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());

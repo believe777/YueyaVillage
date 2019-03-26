@@ -11,6 +11,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getResourceId());
         bindPresenter();
+        initIntent();
         initControll();
         initObserable();
     }
@@ -20,6 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //绑定presenter
     protected abstract void bindPresenter();
+
+    protected abstract void initIntent();
 
     //初始化控件
     protected abstract void initControll();

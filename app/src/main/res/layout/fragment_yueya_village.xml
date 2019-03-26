@@ -1,12 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_base_title" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sv_village_user_icon"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        fresco:placeholderImage="@drawable/default_user_icon"
+        fresco:roundAsCircle="true" />
 
     <TextView
+        android:id="@+id/tv_village_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="月芽村" />
+        android:layout_marginBottom="30dp"
+        android:text="姓名"
+        android:textColor="#252427"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_village_works"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="我的作品"
+            android:textColor="#615F6A"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#D9D8DE" />
+
+        <TextView
+            android:id="@+id/tv_village_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="我的收藏"
+            android:textColor="#615F6A"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#D9D8DE" />
+
+        <TextView
+            android:id="@+id/tv_village_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="我的信息"
+            android:textColor="#615F6A"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#D9D8DE" />
+
+        <TextView
+            android:id="@+id/tv_village_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="我的排名"
+            android:textColor="#615F6A"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#D9D8DE" />
+    </LinearLayout>
 </LinearLayout>

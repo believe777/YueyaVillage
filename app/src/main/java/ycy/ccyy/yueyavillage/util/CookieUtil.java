@@ -18,15 +18,20 @@ public class CookieUtil {
     }
 
     // TODO: 2019/3/18 cookie存数据库，每次拉起应用先去数据库查看是否有cookie；用于免登陆 
-    public void saveCookie(String cookie) {
-
+    public void saveCookie(String cookie,boolean save) {
+        if(cookie == this.cookie || !save) {
+            return;
+        }
+        this.cookie = cookie;
+        DataCacheUtil.getInstance().getUserInfo().user_id = cookie;
+        DataCacheUtil.getInstance().getUserInfo().update();
     }
 
     public String getCookie() {
         return cookie;
     }
 
-    public void clearCookie(){
+    public void clearCookie() {
 
     }
 }
