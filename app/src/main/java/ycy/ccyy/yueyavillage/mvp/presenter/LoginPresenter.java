@@ -26,6 +26,7 @@ import ycy.ccyy.yueyavillage.mvp.contract.LoginContract;
 import ycy.ccyy.yueyavillage.mvp.module.DataManager;
 import ycy.ccyy.yueyavillage.mvp.module.LoginModule;
 import ycy.ccyy.yueyavillage.util.DataCacheUtil;
+import ycy.ccyy.yueyavillage.util.KeysUtil;
 import ycy.ccyy.yueyavillage.util.MD5Util;
 import ycy.ccyy.yueyavillage.util.RxUtil;
 import ycy.ccyy.yueyavillage.util.SharedPreferenceUtil;
@@ -39,8 +40,6 @@ import ycy.ccyy.yueyavillage.util.SharedPreferenceUtil;
 public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
     public static final String LOGIN_KEY = "login_key";
     // TODO: 2019/4/11   网络下发或者打成so文件获取
-    public static final String QQ_APP_ID = "101557229";
-    public static final String QQ_APP_KEY = "c5feff957addbf3ce0c907a052924fad";
     //private LoginContract.Module module;
     private Tencent mTencent;
     private DataManager dataManager;
@@ -150,7 +149,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
     @Override
     public void qqLogin(Activity activity) {
-        mTencent = Tencent.createInstance(LoginPresenter.QQ_APP_ID, YcyApplication.getApp());
+        mTencent = Tencent.createInstance(KeysUtil.getAppID(), YcyApplication.getApp());
         if (!mTencent.isSessionValid()) {
             mTencent.login(activity, "all", iUiListener);
         }
