@@ -28,23 +28,12 @@ public class HomeViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                isDragger = super.onInterceptTouchEvent(ev);
-                lastTouchX = ev.getX();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (Math.abs(lastTouchX - ev.getX()) > minScroll) {
-                    isDragger = true;
-                }
-                break;
-        }
-        return isDragger;
+        return false;
     }
 
     // TODO: 2019/3/18 后续有非左右滑动事件是再修改
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        return false;
+        return true;
     }
 }

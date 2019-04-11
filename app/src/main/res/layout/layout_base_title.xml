@@ -6,9 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/title_padding"
-        android:paddingRight="@dimen/title_padding">
+        android:layout_height="match_parent">
 
         <ViewStub
             android:id="@+id/title_left_content"
@@ -37,7 +35,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_alignParentBottom="true"
         android:alpha="0.25"
-        android:background="#000000"
-        android:layout_alignParentBottom="true"/>
+        android:background="#000000" />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        beforeOnCreate();
         super.onCreate(savedInstanceState);
         setContentView(getResourceId());
         bindPresenter();
@@ -15,6 +16,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initControll();
         initObserable();
     }
+
+    protected abstract void beforeOnCreate();
 
     //xml资源
     protected abstract int getResourceId();

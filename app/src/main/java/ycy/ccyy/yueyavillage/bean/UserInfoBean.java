@@ -15,8 +15,8 @@ public class UserInfoBean extends BaseModel {
     public String user_id;//服务器用户id
     @Column
     public String openId;
-    @Column
-    public String token;
+//    @Column
+//    public String token;
     @Column
     public String expires;
     @Column
@@ -31,4 +31,6 @@ public class UserInfoBean extends BaseModel {
     public String city;//城市
     @Column
     public String year;//出生年
+    @Column
+    public int borderType;//选择边框样式
 }

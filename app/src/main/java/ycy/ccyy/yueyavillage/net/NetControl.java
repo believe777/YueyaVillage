@@ -2,6 +2,7 @@ package ycy.ccyy.yueyavillage.net;
 
 import android.os.Build;
 
+import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.IOException;
@@ -32,13 +33,14 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ycy.ccyy.yueyavillage.BuildConfig;
+import ycy.ccyy.yueyavillage.YcyApplication;
 import ycy.ccyy.yueyavillage.util.StorageUtils;
 
 //网络请求库
 public class NetControl {
     private static final long MAX_SIZE = 1024 * 300;
     private static NetControl control = null;
-    private static final String BASE_URL = "http://ycy_wanlai407.dahuizong.com:10001/";
+    private static final String BASE_URL = "http://ycy_wanlai407.dahuizong.com/";
     private Retrofit retrofit;
 
     public static NetControl getInstance() {
@@ -54,6 +56,15 @@ public class NetControl {
 
     NetControl() {
         retrofit = initRotrofit(BASE_URL);
+        if (BuildConfig.DEBUG) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(YcyApplication.getApp())
+                            .enableDumpapp(
+                                    Stetho.defaultDumperPluginsProvider(YcyApplication.getApp()))
+                            .enableWebKitInspector(
+                                    Stetho.defaultInspectorModulesProvider(YcyApplication.getApp()))
+                            .build());
+        }
     }
 
     public ApiService getApi() {

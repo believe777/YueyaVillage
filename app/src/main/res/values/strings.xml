@@ -2,4 +2,5 @@
     <string name="app_name">月芽村</string>
     <string name="login_wx">微信登录</string>
     <string name="login_qq">QQ登录</string>
+    <string name="image_selector_finish">完成(%s/9)</string>
 </resources>

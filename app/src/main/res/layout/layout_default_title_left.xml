@@ -3,7 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/title_height"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/title_padding"
+    android:paddingRight="@dimen/title_padding">
 
     <ImageView
         android:id="@+id/iv_title_back"

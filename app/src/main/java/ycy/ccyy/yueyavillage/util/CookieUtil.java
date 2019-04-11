@@ -1,5 +1,7 @@
 package ycy.ccyy.yueyavillage.util;
 
+import ycy.ccyy.yueyavillage.bean.UserInfoBean;
+
 //cookie存取
 public class CookieUtil {
     private volatile static CookieUtil instance = null;
@@ -18,13 +20,15 @@ public class CookieUtil {
     }
 
     // TODO: 2019/3/18 cookie存数据库，每次拉起应用先去数据库查看是否有cookie；用于免登陆 
-    public void saveCookie(String cookie,boolean save) {
-        if(cookie == this.cookie || !save) {
+    public void saveCookie(String cookie, boolean save) {
+        if (cookie == this.cookie || !save) {
             return;
         }
         this.cookie = cookie;
-        DataCacheUtil.getInstance().getUserInfo().user_id = cookie;
-        DataCacheUtil.getInstance().getUserInfo().update();
+        UserInfoBean userInfoBean = DataCacheUtil.getInstance().getUserInfo();
+        userInfoBean.user_id = cookie;
+        userInfoBean.update();
+        DataCacheUtil.getInstance().setUserInfoBean(userInfoBean);
     }
 
     public String getCookie() {

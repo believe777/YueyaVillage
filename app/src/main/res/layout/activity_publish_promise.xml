@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_base_title" />
+
+    <EditText
+        android:focusable="true"
+        android:id="@+id/et_promise_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:hint="许下您的愿望"
+        android:padding="20dp"
+        android:textColorHint="#8E8E93"
+        android:textSize="18sp"
+        android:focusableInTouchMode="true"
+        android:background="@null"/>
+</LinearLayout>

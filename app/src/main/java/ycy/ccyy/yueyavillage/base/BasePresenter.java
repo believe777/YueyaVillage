@@ -1,17 +1,21 @@
 package ycy.ccyy.yueyavillage.base;
 
-public class BasePresenter<V extends BaseView> {
+import android.support.annotation.CallSuper;
+
+public class BasePresenter<V extends AbstractView> implements AbstractPresenter<V> {
     protected V mView;
 
+    public boolean isAttached() {
+        return mView == null;
+    }
+
+    @Override
     public void onAttach(V mView) {
         this.mView = mView;
     }
 
+    @Override
     public void onDetach() {
         this.mView = null;
-    }
-
-    public boolean isAttached() {
-        return mView == null;
     }
 }

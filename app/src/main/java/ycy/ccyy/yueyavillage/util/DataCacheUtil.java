@@ -1,19 +1,11 @@
 package ycy.ccyy.yueyavillage.util;
 
-import com.tencent.tauth.Tencent;
-
-import ycy.ccyy.yueyavillage.YcyApplication;
 import ycy.ccyy.yueyavillage.bean.UserInfoBean;
-import ycy.ccyy.yueyavillage.presenter.LoginPresenter;
 
 public class DataCacheUtil {
-    private Tencent mTencent;
     private static DataCacheUtil dataCacheUtil = null;
     private UserInfoBean userInfoBean;
 
-    DataCacheUtil() {
-        mTencent = Tencent.createInstance(LoginPresenter.QQ_APP_ID, YcyApplication.getApp());
-    }
 
     public static DataCacheUtil getInstance() {
         if (dataCacheUtil == null) {
@@ -36,9 +28,5 @@ public class DataCacheUtil {
 
     public boolean isLogin() {
         return userInfoBean != null;
-    }
-
-    public Tencent getTencent(){
-        return mTencent;
     }
 }

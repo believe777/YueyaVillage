@@ -7,7 +7,6 @@ import okhttp3.Response;
 import ycy.ccyy.yueyavillage.util.CookieUtil;
 
 //cookie拦截
-// TODO: 2019/3/18 预留，看后期是否自己做登录注册
 public class CookieInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {

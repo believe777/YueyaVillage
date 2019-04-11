@@ -13,15 +13,20 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.List;
 
 import ycy.ccyy.yueyavillage.R;
-import ycy.ccyy.yueyavillage.bean.MyWorkBean;
+import ycy.ccyy.yueyavillage.bean.WorkBean;
 
 public class MyWorksAdapter extends RecyclerView.Adapter<MyWorksAdapter.MyWorksHolder> {
-    private List<MyWorkBean> list;
+    private List<WorkBean> list;
     private Context context;
+    private OnWorksItemClickListener listener;
 
-    public MyWorksAdapter(Context context, List<MyWorkBean> list) {
+    public MyWorksAdapter(Context context, List<WorkBean> list) {
         this.list = list;
         this.context = context;
+    }
+
+    public void setOnWorksItemClickListener(OnWorksItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -32,15 +37,20 @@ public class MyWorksAdapter extends RecyclerView.Adapter<MyWorksAdapter.MyWorksH
     }
 
     @Override
-    public void onBindViewHolder(MyWorksAdapter.MyWorksHolder holder, int position) {
-        MyWorkBean bean = list.get(position);
+    public void onBindViewHolder(final MyWorksAdapter.MyWorksHolder holder, int position) {
+        WorkBean bean = list.get(position);
         holder.svMyWorkIcon.setImageURI(Uri.parse(bean.icon));
         holder.tvMyWorkTitle.setText(bean.title);
         holder.tvMyWorkDate.setText(bean.date);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (listener != null) {
+                    int position = holder.getAdapterPosition();
+                    if (position >= 0) {
+                        listener.onClick(list.get(holder.getAdapterPosition()));
+                    }
+                }
             }
         });
     }
@@ -61,5 +71,9 @@ public class MyWorksAdapter extends RecyclerView.Adapter<MyWorksAdapter.MyWorksH
             tvMyWorkDate = itemView.findViewById(R.id.tv_my_work_date);
             svMyWorkIcon = itemView.findViewById(R.id.sv_my_work_icon);
         }
+    }
+
+    public interface OnWorksItemClickListener {
+        void onClick(WorkBean bean);
     }
 }

@@ -9,17 +9,18 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".YcyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".view.LoadingActivity"
+            android:name=".mvp.view.activity.LoadingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,18 +42,43 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".mvp.view.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.ChooseHeadFrameActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".mvp.view.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".mvp.view.activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.MyWorksActivity"
+            android:name=".mvp.view.activity.MyWorksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.MyWorkDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.MyCollectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.MyCollectionDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.PublishPromiseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".mvp.view.activity.PublishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.ImageSelectorActivity"
             android:screenOrientation="portrait" />
     </application>
 
