@@ -2,6 +2,7 @@ package ycy.ccyy.yueyavillage.mvp.view.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.TextView;
@@ -105,6 +106,10 @@ public class YueyaVillageFragment extends BaseFragment implements View.OnClickLi
         ViewStub viewStub = view.findViewById(showView);
         View borderView = viewStub.inflate();
         SimpleDraweeView svUserIcon = borderView.findViewById(R.id.sv_village_user_icon);
-        svUserIcon.setImageURI(Uri.parse(DataCacheUtil.getInstance().getUserInfo().userIcon));
+        if(!TextUtils.isEmpty(DataCacheUtil.getInstance().getUserInfo().userBigIcon)) {
+            svUserIcon.setImageURI(Uri.parse(DataCacheUtil.getInstance().getUserInfo().userBigIcon));
+        } else {
+            svUserIcon.setImageURI(Uri.parse(DataCacheUtil.getInstance().getUserInfo().userIcon));
+        }
     }
 }

@@ -5,8 +5,10 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -32,6 +34,13 @@ public class YcyApplication extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(
+                                Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this))
+                        .build());
         app = this;
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(app)).build();
         appComponent.inject(this);
@@ -48,7 +57,9 @@ public class YcyApplication extends Application implements HasActivityInjector {
     private void initUser() {
         String loginKey = SharedPreferenceUtil.getString(LoginPresenter.LOGIN_KEY, "");
         if (!TextUtils.isEmpty(loginKey)) {
-            UserInfoBean userInfoBean = SQLite.select().from(UserInfoBean.class).where(UserInfoBean_Table.uId.eq(loginKey)).querySingle();
+            HashMap map = new HashMap();
+            map.put(UserInfoBean_Table.uId, loginKey);
+            UserInfoBean userInfoBean = getAppComponent().getDataManager().query(map, UserInfoBean.class);
             if (userInfoBean == null) {
                 return;
             } else {

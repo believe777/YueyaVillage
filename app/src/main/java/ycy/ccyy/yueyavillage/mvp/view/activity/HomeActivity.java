@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,6 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomeCont
         homeViewPager.setOffscreenPageLimit(4);
         initFragment();
         mPresenter.getTabPages();
-        homeViewPager.setCurrentItem(choosePage);
     }
 
     @Override
@@ -91,18 +92,17 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomeCont
         fragmentList.add(yueyaVillageFragment);
         listener = ((AmusementParkFragment) amusementParkFragment).listener;
         homeViewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragmentList));
-        homeViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(homeTabLayout));
-        homeTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(homeViewPager));
+        homeViewPager.setCurrentItem(choosePage);
     }
 
-    private View createCustomView(String resource, String text, boolean selected) {
+    private View createCustomView(String resource, String text) {
         View view = getLayoutInflater().inflate(R.layout.layout_base_tab, homeTabLayout, false);
-        ImageView tabIcon = view.findViewById(R.id.iv_tab);
-        tabIcon.setColorFilter(getResources().getColor(selected ? R.color.tab_selected : R.color.tab_unselected));
+        SimpleDraweeView tabIcon = view.findViewById(R.id.iv_tab);
+        tabIcon.setColorFilter(getResources().getColor(R.color.tab_unselected));
         TextView tabText = view.findViewById(R.id.tv_tab);
         tabIcon.setImageURI(Uri.parse(resource));
         tabText.setText(text);
-        tabText.setTextColor(getResources().getColor(selected ? R.color.tab_selected : R.color.tab_unselected));
+        tabText.setTextColor(getResources().getColor(R.color.tab_unselected));
         return view;
     }
 
@@ -121,9 +121,17 @@ public class HomeActivity extends MvpActivity<HomePresenter> implements HomeCont
 
     @Override
     public void tabPagesInfo(List<TabPagesInfoBean> response) {
-        for (TabPagesInfoBean tabPagesInfoBean : response) {
-            homeTabLayout.addTab(homeTabLayout.newTab().setCustomView(createCustomView(tabPagesInfoBean.tabIcon, tabPagesInfoBean.tabName, choosePage == tabPagesInfoBean.pageType)));
+        for (int i = 0; i < response.size(); i++) {
+            TabPagesInfoBean tabPagesInfoBean = response.get(i);
+            TabLayout.Tab tab = homeTabLayout.newTab().setCustomView(createCustomView(tabPagesInfoBean.tabIcon, tabPagesInfoBean.tabName));
+            if (i == choosePage) {
+                tab.select();
+            }
+            homeTabLayout.addTab(tab);
         }
+        homeViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(homeTabLayout));
+        homeTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(homeViewPager));
+        //homeTabLayout.getTabAt(choosePage).select();
     }
 
     public interface OnWebViewBackListener {

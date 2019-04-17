@@ -1,6 +1,7 @@
 package ycy.ccyy.yueyavillage.mvp.view.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 
 import com.tencent.connect.common.Constants;
@@ -64,7 +65,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginC
                 mPresenter.qqLogin(this);
                 break;
             case R.id.btn_login_wx:
-                showToast("暂不支持微信登录");
+                //showToast("暂不支持微信登录"+Build.VERSION.SDK_INT);
+                showToast("当前版本"+Build.VERSION.SDK_INT);
+
                 //图片上传
 //                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "ycy_login.png");
 //                RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);

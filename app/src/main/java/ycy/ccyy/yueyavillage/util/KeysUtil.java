@@ -7,4 +7,5 @@ public class KeysUtil {
 
     public static native String getAppID();
     public static native String getAppKey();
+    public static native String getKey();
 }

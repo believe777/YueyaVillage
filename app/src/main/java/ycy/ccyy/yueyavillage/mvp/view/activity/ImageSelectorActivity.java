@@ -63,7 +63,9 @@ public class ImageSelectorActivity extends MvpActivity<ImageSelectorPresenter> i
             finishText.setTextColor(Color.parseColor("#615F6A"));
         }
         finishText.setText(String.format(getResources().getString(R.string.image_selector_finish), String.valueOf(selectedNumber)));
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

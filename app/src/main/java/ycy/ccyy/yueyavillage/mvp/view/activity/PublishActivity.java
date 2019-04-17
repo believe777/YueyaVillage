@@ -90,16 +90,18 @@ public class PublishActivity extends MvpActivity<PublishPresenter> implements Pu
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_TAKE_PHOTO) {
-            Bundle bundle = data.getExtras();
-            Bitmap bitmap = (Bitmap) bundle.get("data");
-            imagePicker.addImage(bitmap);
-        } else if (requestCode == RESULT_OPEN_ALBUM && resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            List<String> imagePath = (List<String>) bundle.get("data");
-            if (!CollectionUtil.isEmpty(imagePath)) {
-                for (String s : imagePath) {
-                    imagePicker.addImage(s);
+        if (data != null) {
+            if (requestCode == RESULT_TAKE_PHOTO) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");
+                imagePicker.addImage(bitmap);
+            } else if (requestCode == RESULT_OPEN_ALBUM && resultCode == RESULT_OK) {
+                Bundle bundle = data.getExtras();
+                List<String> imagePath = (List<String>) bundle.get("data");
+                if (!CollectionUtil.isEmpty(imagePath)) {
+                    for (String s : imagePath) {
+                        imagePicker.addImage(s);
+                    }
                 }
             }
         }

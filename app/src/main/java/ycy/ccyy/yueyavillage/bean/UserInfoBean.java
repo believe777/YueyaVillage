@@ -5,9 +5,10 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import ycy.ccyy.yueyavillage.util.DataBaseUtil;
+import ycy.ccyy.yueyavillage.database.DataBaseImpl;
 
-@Table(database = DataBaseUtil.class)
+
+@Table(database = DataBaseImpl.class)
 public class UserInfoBean extends BaseModel {
     @PrimaryKey
     public String uId;
@@ -25,6 +26,8 @@ public class UserInfoBean extends BaseModel {
     public String sex;//性别
     @Column
     public String userIcon;//头像
+    @Column
+    public String userBigIcon;//大头像，可能为空
     @Column
     public String province;//省份
     @Column

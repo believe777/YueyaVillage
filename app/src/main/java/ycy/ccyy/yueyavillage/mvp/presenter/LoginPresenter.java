@@ -9,26 +9,20 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import ycy.ccyy.yueyavillage.YcyApplication;
 import ycy.ccyy.yueyavillage.base.BasePresenter;
-import ycy.ccyy.yueyavillage.bean.ResponseBase;
 import ycy.ccyy.yueyavillage.bean.UserInfoBean;
 import ycy.ccyy.yueyavillage.mvp.contract.LoginContract;
 import ycy.ccyy.yueyavillage.mvp.module.DataManager;
-import ycy.ccyy.yueyavillage.mvp.module.LoginModule;
 import ycy.ccyy.yueyavillage.util.DataCacheUtil;
 import ycy.ccyy.yueyavillage.util.KeysUtil;
 import ycy.ccyy.yueyavillage.util.MD5Util;
-import ycy.ccyy.yueyavillage.util.RxUtil;
 import ycy.ccyy.yueyavillage.util.SharedPreferenceUtil;
 
 /**
@@ -73,39 +67,42 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                             userInfo.userName = obj.getString("nickname");//姓名
                             userInfo.sex = obj.getString("gender");//性别
                             userInfo.userIcon = obj.getString("figureurl_qq_1");//头像
+                            userInfo.userBigIcon = obj.getString("figureurl_qq_2");//头像
                             userInfo.province = obj.getString("province");//省份
                             userInfo.city = obj.getString("city");//城市
                             userInfo.year = obj.getString("year");//出生年
                             DataCacheUtil.getInstance().setUserInfoBean(userInfo);
-                            userInfo.update();
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("openid", "test_openid_ycy");
-                            map.put("picurl", userInfo.userIcon);
-                            map.put("name", userInfo.userName);
-                            dataManager.regist(map)
-                                    .compose(RxUtil.<ResponseBase>observerToMainScheduler())
-                                    //.as(mView.<ResponseBase>bindAutoDispose())
-                                    .subscribe(new Observer<ResponseBase>() {
-                                        @Override
-                                        public void onSubscribe(Disposable d) {
-
-                                        }
-
-                                        @Override
-                                        public void onNext(ResponseBase responseBody) {
-                                            mView.showToast("登录成功");
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            mView.onLoginFailed("登录失败："+e.getMessage());
-                                        }
-
-                                        @Override
-                                        public void onComplete() {
-                                            mView.qqLogin();
-                                        }
-                                    });
+                            YcyApplication.getAppComponent().getDataManager().insert(userInfo);
+                            //userInfo.insert();
+//                            HashMap<String, String> map = new HashMap<>();
+//                            map.put("openid", "test_openid_ycy");
+//                            map.put("picurl", userInfo.userIcon);
+//                            map.put("name", userInfo.userName);
+//                            dataManager.regist(map)
+//                                    .compose(RxUtil.<ResponseBase>observerToMainScheduler())
+//                                    //.as(mView.<ResponseBase>bindAutoDispose())
+//                                    .subscribe(new Observer<ResponseBase>() {
+//                                        @Override
+//                                        public void onSubscribe(Disposable d) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onNext(ResponseBase responseBody) {
+//                                            //mView.showToast("登录成功");
+//                                        }
+//
+//                                        @Override
+//                                        public void onError(Throwable e) {
+//                                            mView.onLoginFailed("登录失败："+e.getMessage());
+//                                        }
+//
+//                                        @Override
+//                                        public void onComplete() {
+//                                            mView.qqLogin();
+//                                        }
+//                                    });
+                            mView.qqLogin();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             mView.onLoginFailed("解析异常");
